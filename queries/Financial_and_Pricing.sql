@@ -13,7 +13,7 @@ SELECT
     SUM(t.tip_amount) AS tip_revenue,
     SUM(t.tolls_amount) AS tolls_revenue,
     SUM(t.congestion_surcharge) AS congestion_revenue
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
 GROUP BY trip_date, year, month, week, weekday;
 
 SELECT * FROM `views_fordashboard.total_fare_revenue_over_time` LIMIT 1000;
@@ -32,10 +32,10 @@ SELECT
     ROUND(AVG(t.total_amount), 2) AS avg_total_amount_per_trip,
     ROUND(AVG(t.trip_distance), 2) AS avg_trip_distance,
     COUNT(*) AS total_trips
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` pz 
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` pz 
     ON t.PULocationID = pz.LocationID
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` dz 
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` dz 
     ON t.DOLocationID = dz.LocationID
 GROUP BY trip_date, year, month, pickup_hour, pickup_borough, dropoff_borough;
 
@@ -52,7 +52,7 @@ WITH payment_summary AS (
         EXTRACT(WEEK FROM t.tpep_pickup_datetime) AS week,
         t.payment_type,
         COUNT(*) AS total_trips
-    FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
+    FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
     GROUP BY trip_date, year, month, week, t.payment_type
 ),
 payment_proportion AS (
@@ -104,10 +104,10 @@ SELECT
     ROUND(AVG(t.total_amount), 2) AS avg_total_fare,
     ROUND(AVG(t.fare_amount), 2) AS avg_fare,
     ROUND(AVG(t.tip_amount / NULLIF(t.total_amount, 0)), 4) * 100 AS avg_tip_percentage
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` pz 
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` pz 
     ON t.PULocationID = pz.LocationID
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` dz 
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` dz 
     ON t.DOLocationID = dz.LocationID
 WHERE t.payment_type = 1  -- Only credit card payments (cash tips are not recorded)
 GROUP BY trip_date, year, month, pickup_hour, pickup_borough, dropoff_borough;
@@ -128,7 +128,7 @@ SELECT
     ROUND(SUM(t.airport_fee), 2) AS total_airport_fees,
     ROUND(SUM(t.MTA_tax + t.congestion_surcharge + t.airport_fee), 2) AS total_additional_revenue,
     ROUND(AVG(t.MTA_tax + t.congestion_surcharge + t.airport_fee), 2) AS avg_additional_charge_per_trip
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
 GROUP BY trip_date, year, month;
 
 SELECT * FROM `views_fordashboard.additional_charges_revenue` LIMIT 1000;

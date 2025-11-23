@@ -11,10 +11,10 @@ SELECT
     pz.Zone AS pickup_zone,
     dz.Zone AS dropoff_zone,
     COUNT(*) AS total_trips
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` pz 
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` pz 
     ON t.PULocationID = pz.LocationID
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` dz 
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` dz 
     ON t.DOLocationID = dz.LocationID
 GROUP BY trip_date, year, month, pickup_borough, dropoff_borough, pickup_zone, dropoff_zone;
 
@@ -37,10 +37,10 @@ SELECT
     COUNT(*) AS total_trips,
     ROUND(AVG(t.total_amount), 2) AS avg_fare,
     ROUND(AVG(t.trip_distance), 2) AS avg_distance
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` pz 
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` pz 
     ON t.PULocationID = pz.LocationID
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` dz 
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` dz 
     ON t.DOLocationID = dz.LocationID
 WHERE pz.Zone IN ('JFK Airport', 'LaGuardia Airport', 'Newark Airport') 
    OR dz.Zone IN ('JFK Airport', 'LaGuardia Airport', 'Newark Airport')
@@ -68,8 +68,8 @@ SELECT
     END AS rate_code_description,
     COUNT(*) AS total_trips,
     ROUND(AVG(t.total_amount), 2) AS avg_fare
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` pz 
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` pz 
     ON t.PULocationID = pz.LocationID
 GROUP BY year, month, pickup_borough, t.RateCodeID, rate_code_description;
 
@@ -85,7 +85,7 @@ SELECT
     EXTRACT(HOUR FROM t.tpep_pickup_datetime) AS hour,
     ROUND(AVG(TIMESTAMP_DIFF(t.tpep_dropoff_datetime, t.tpep_pickup_datetime, MINUTE)), 2) AS avg_trip_duration_min,
     COUNT(*) AS total_trips
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
 GROUP BY year, month, day, hour;
 
 SELECT * FROM `views_fordashboard.trip_duration_analysis` LIMIT 1000;

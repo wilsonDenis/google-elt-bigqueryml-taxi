@@ -1,5 +1,5 @@
 -- Training with BOOSTED TREE REGRESSOR
-CREATE OR REPLACE MODEL `nyc-yellow-trips.ml_dataset.yellow_trips_model`
+CREATE OR REPLACE MODEL `nyc-yellow-trips.ml_dataset.advance-path-477219-e1`
   OPTIONS (model_type="BOOSTED_TREE_REGRESSOR", enable_global_explain=TRUE, input_label_cols=["total_amount"])
 AS 
 SELECT * FROM `nyc-yellow-trips.ml_dataset.preprocessed_train_data` LIMIT 10000;
@@ -10,18 +10,18 @@ SELECT COUNT(*) FROM `nyc-yellow-trips.ml_dataset.preprocessed_test_data`;
 
 -- Evaluate the trained model with the test data
 SELECT * FROM 
-ML.EVALUATE(MODEL `nyc-yellow-trips.ml_dataset.yellow_trips_model`, 
+ML.EVALUATE(MODEL `nyc-yellow-trips.ml_dataset.advance-path-477219-e1`, 
 (SELECT * FROM `nyc-yellow-trips.ml_dataset.preprocessed_test_data`));
 
 
 -- Example for making predictions from the model
 SELECT * FROM
-ML.PREDICT (MODEL `nyc-yellow-trips.ml_dataset.yellow_trips_model`, 
+ML.PREDICT (MODEL `nyc-yellow-trips.ml_dataset.advance-path-477219-e1`, 
 (SELECT * FROM `nyc-yellow-trips.ml_dataset.preprocessed_test_data` LIMIT 10));
 
 
 -- Query the model's global explanations
-SELECT * FROM ML.GLOBAL_EXPLAIN(MODEL `nyc-yellow-trips.ml_dataset.yellow_trips_model`);
+SELECT * FROM ML.GLOBAL_EXPLAIN(MODEL `nyc-yellow-trips.ml_dataset.advance-path-477219-e1`);
 
 
 

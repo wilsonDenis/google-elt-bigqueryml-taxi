@@ -6,8 +6,8 @@ import io
 from datetime import UTC  # Import UTC explicitly
 
 # Set project-specific variables
-PROJECT_ID = "nyc-yellow-trips"
-BUCKET_NAME = f"{PROJECT_ID}-data-buckets"
+PROJECT_ID = "advance-path-477219-e1"
+BUCKET_NAME = f"{PROJECT_ID}-data-bucket"
 GCS_FOLDER = "dataset/trips/"
 GCS_LOG_FOLDER = "from-git/logs/"
 TABLE_ID = f"{PROJECT_ID}.raw_yellowtrips.trips"

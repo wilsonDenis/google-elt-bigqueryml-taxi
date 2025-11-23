@@ -9,7 +9,7 @@ SELECT
     EXTRACT(WEEK FROM tpep_pickup_datetime) AS week,
     EXTRACT(DAYOFWEEK FROM tpep_pickup_datetime) AS weekday,
     COUNT(*) AS total_trips
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered`
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered`
 GROUP BY trip_date, year, month, week, weekday
 ORDER BY trip_date;
 
@@ -23,8 +23,8 @@ SELECT
     z.Borough,
     z.Zone,
     COUNT(*) AS total_trips
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` z
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` z
 ON t.PULocationID = z.LocationID
 GROUP BY pickup_hour, z.Borough, z.Zone
 ORDER BY total_trips DESC;
@@ -51,10 +51,10 @@ SELECT
     dz.Borough AS dropoff_borough,
     dz.Zone AS dropoff_zone,
     COUNT(*) AS total_trips
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` pz 
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` pz 
     ON t.PULocationID = pz.LocationID
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` dz 
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` dz 
     ON t.DOLocationID = dz.LocationID
 GROUP BY trip_date, year, month, week, weekday, pickup_borough, pickup_zone, dropoff_borough, dropoff_zone;
 
@@ -79,10 +79,10 @@ SELECT
     pz.Borough AS pickup_borough,
     dz.Borough AS dropoff_borough,
     AVG(t.trip_distance) AS avg_trip_distance
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` pz 
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` pz 
     ON t.PULocationID = pz.LocationID
-JOIN `nyc-yellow-trips.raw_yellowtrips.taxi_zone` dz 
+JOIN `advance-path-477219-e1.raw_yellowtrips.taxi_zone` dz 
     ON t.DOLocationID = dz.LocationID
 GROUP BY trip_date, year, month, season, pickup_hour, pickup_borough, dropoff_borough
 ORDER BY trip_date, pickup_hour;
@@ -107,7 +107,7 @@ SELECT
         ELSE 'Multiple Passengers'
     END AS passenger_category,
     COUNT(*) AS total_trips
-FROM `nyc-yellow-trips.transformed_data.cleaned_and_filtered` t
+FROM `advance-path-477219-e1.transformed_data.cleaned_and_filtered` t
 GROUP BY trip_date, year, month, season, passenger_category
 ORDER BY trip_date;
 
